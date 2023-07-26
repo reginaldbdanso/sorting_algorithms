@@ -7,35 +7,37 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *sorted, *current, *temp;
+	listint_t *asorted, *current_node, *temp_ptr;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	sorted = *list;
+	asorted = *list;
 	/* Initially, the sorted part of the list contains only the first node */
-	current = sorted->next; /* Start sorting from the second node */
+	current_node = asorted->next;
+	/* Start sorting from the second node */
 
-	while (current != NULL)
+	while (current_node != NULL)
 	{
-		temp = current;
-		current = current->next;
+		temp_ptr = current_node;
+		current_node = current_node->next;
 
-		while (temp->prev != NULL && temp->n < temp->prev->n)
+		while (temp_ptr->prev != NULL && temp_ptr->n < temp_ptr->prev->n)
 		{
 			/* Swap the nodes to sort the list */
-			if (temp->next != NULL)
-				temp->next->prev = temp->prev;
-			temp->prev->next = temp->next;
-			temp->next = temp->prev;
-			temp->prev = temp->prev->prev;
-			temp->next->prev = temp;
+			if (temp_ptr->next != NULL)
+				temp_ptr->next->prev = temp_ptr->prev;
+
+			temp_ptr->prev->next = temp_ptr->next;
+			temp_ptr->next = temp_ptr->prev;
+			temp_ptr->prev = temp_ptr->prev->prev;
+			temp_ptr->next->prev = temp_ptr;
 
 			/* Update the head of the list if needed */
-			if (temp->prev == NULL)
-				*list = temp;
+			if (temp_ptr->prev == NULL)
+				*list = temp_ptr;
 			else
-				temp->prev->next = temp;
+				temp_ptr->prev->next = temp_ptr;
 
 			/* Print the list after each swap */
 			print_list(*list);
