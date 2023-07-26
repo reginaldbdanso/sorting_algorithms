@@ -4,7 +4,7 @@
  * swap - swaps positions of two numbers
  * @a: pointer to first number to be swapped
  * @b: pointer to second number to be swapped
-*/
+ */
 void swap(int *a, int *b)
 {
 	int temp;
@@ -23,6 +23,9 @@ void swap(int *a, int *b)
 void bubble_sort(int *array, size_t size)
 {
 	size_t i, j;
+
+	if (array == NULL)
+		return;
 
 	for (i = 0; i < size - 1; i++)
 	{
