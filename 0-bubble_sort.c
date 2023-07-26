@@ -4,7 +4,6 @@
  * swap - swaps positions of two numbers
  * @a: pointer to first number to be swapped
  * @b: pointer to second number to be swapped
-
 */
 void swap(int *a, int *b)
 {
