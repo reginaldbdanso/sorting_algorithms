@@ -1,51 +1,45 @@
 #include "sort.h"
 
 /**
- * swap - swaps positions of two numbers
- * @a: pointer to first number to be swapped
- * @b: pointer to second number to be swapped
-*/
-void swap(int *a, int *b)
-{
-	int temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-/**
- * insertion_sort_list - sorts a doubly linked list of integers in ascending
- * order using the Insertion sort algorithm
- * @list: doubly linked list
- * Description: prints the array after every swap
+ * insertion_sort_list - Sorts a doubly linked list of integers in
+ * ascending order
+ * using the Insertion sort algorithm
+ * @list: Double pointer to the head of the doubly linked list
  */
 void insertion_sort_list(listint_t **list)
 {
-	size_t i, j;
+	listint_t *sorted, *current, *temp;
 
-	for (i = 0; i < size - 1; i++)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
+		return;
+
+	sorted = *list;
+	/* Initially, the sorted part of the list contains only the first node */
+	current = sorted->next; /* Start sorting from the second node */
+
+	while (current != NULL)
 	{
-		for (j = 0; j < size - i - 1; j++)
+		temp = current;
+		current = current->next;
+
+		while (temp->prev != NULL && temp->n < temp->prev->n)
 		{
-			if (array[j] > array[j + 1])
-			{
-				swap(&array[j], &array[j + 1]);
-				print_array(array, size);
-			}
+			/* Swap the nodes to sort the list */
+			if (temp->next != NULL)
+				temp->next->prev = temp->prev;
+			temp->prev->next = temp->next;
+			temp->next = temp->prev;
+			temp->prev = temp->prev->prev;
+			temp->next->prev = temp;
+
+			/* Update the head of the list if needed */
+			if (temp->prev == NULL)
+				*list = temp;
+			else
+				temp->prev->next = temp;
+
+			/* Print the list after each swap */
+			print_list(*list);
 		}
 	}
 }
-
-/**
- * NB :
- * Whenever a swappable pair is encountered, make the swap,
- * and go back to the beginning
- * 
- * Since this is a linked list the swap and has to swap nodes
- * instead of array indexes
- * 
- * How do we go back to the beginning?
- * We set the temp pointer with which we are traversing the list
- * to point to the head node
- */
